@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_e5b47861f0fe4b360c26b690675d70df {
+                    position: relative;
+                    width: 100.0vw;
+                    height: 100.0vh;
+
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>/*
+ * Glyphicons Halflings -- the icon font used by folium's default Awesome Markers
+ * (Icon(prefix="glyphicon")). Extracted from Bootstrap 3's glyphicon rules only.
+ *
+ * folium previously loaded netdna's bootstrap-glyphicons.css, which despite its
+ * name ships a full Bootstrap-3 base stylesheet (normalize reset + global `body`
+ * rules) that leaked onto the host page (GH-1820). This file provides just the
+ * @font-face and .glyphicon/.glyphicon-* rules needed for the markers, with no
+ * page-wide side effects. Font files are served from jsDelivr.
+ */
+@font-face{font-family:'Glyphicons Halflings';src:url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.eot');src:url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.woff') format('woff'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.ttf') format('truetype'),url('https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
+.glyphicon-asterisk:before{content:"\2a";}
+.glyphicon-plus:before{content:"\2b";}
+.glyphicon-euro:before{content:"\20ac";}
+.glyphicon-minus:before{content:"\2212";}
+.glyphicon-cloud:before{content:"\2601";}
+.glyphicon-envelope:before{content:"\2709";}
+.glyphicon-pencil:before{content:"\270f";}
+.glyphicon-glass:before{content:"\e001";}
+.glyphicon-music:before{content:"\e002";}
+.glyphicon-search:before{content:"\e003";}
+.glyphicon-heart:before{content:"\e005";}
+.glyphicon-star:before{content:"\e006";}
+.glyphicon-star-empty:before{content:"\e007";}
+.glyphicon-user:before{content:"\e008";}
+.glyphicon-film:before{content:"\e009";}
+.glyphicon-th-large:before{content:"\e010";}
+.glyphicon-th:before{content:"\e011";}
+.glyphicon-th-list:before{content:"\e012";}
+.glyphicon-ok:before{content:"\e013";}
+.glyphicon-remove:before{content:"\e014";}
+.glyphicon-zoom-in:before{content:"\e015";}
+.glyphicon-zoom-out:before{content:"\e016";}
+.glyphicon-off:before{content:"\e017";}
+.glyphicon-signal:before{content:"\e018";}
+.glyphicon-cog:before{content:"\e019";}
+.glyphicon-trash:before{content:"\e020";}
+.glyphicon-home:before{content:"\e021";}
+.glyphicon-file:before{content:"\e022";}
+.glyphicon-time:before{content:"\e023";}
+.glyphicon-road:before{content:"\e024";}
+.glyphicon-download-alt:before{content:"\e025";}
+.glyphicon-download:before{content:"\e026";}
+.glyphicon-upload:before{content:"\e027";}
+.glyphicon-inbox:before{content:"\e028";}
+.glyphicon-play-circle:before{content:"\e029";}
+.glyphicon-repeat:before{content:"\e030";}
+.glyphicon-refresh:before{content:"\e031";}
+.glyphicon-list-alt:before{content:"\e032";}
+.glyphicon-flag:before{content:"\e034";}
+.glyphicon-headphones:before{content:"\e035";}
+.glyphicon-volume-off:before{content:"\e036";}
+.glyphicon-volume-down:before{content:"\e037";}
+.glyphicon-volume-up:before{content:"\e038";}
+.glyphicon-qrcode:before{content:"\e039";}
+.glyphicon-barcode:before{content:"\e040";}
+.glyphicon-tag:before{content:"\e041";}
+.glyphicon-tags:before{content:"\e042";}
+.glyphicon-book:before{content:"\e043";}
+.glyphicon-print:before{content:"\e045";}
+.glyphicon-font:before{content:"\e047";}
+.glyphicon-bold:before{content:"\e048";}
+.glyphicon-italic:before{content:"\e049";}
+.glyphicon-text-height:before{content:"\e050";}
+.glyphicon-text-width:before{content:"\e051";}
+.glyphicon-align-left:before{content:"\e052";}
+.glyphicon-align-center:before{content:"\e053";}
+.glyphicon-align-right:before{content:"\e054";}
+.glyphicon-align-justify:before{content:"\e055";}
+.glyphicon-list:before{content:"\e056";}
+.glyphicon-indent-left:before{content:"\e057";}
+.glyphicon-indent-right:before{content:"\e058";}
+.glyphicon-facetime-video:before{content:"\e059";}
+.glyphicon-picture:before{content:"\e060";}
+.glyphicon-map-marker:before{content:"\e062";}
+.glyphicon-adjust:before{content:"\e063";}
+.glyphicon-tint:before{content:"\e064";}
+.glyphicon-edit:before{content:"\e065";}
+.glyphicon-share:before{content:"\e066";}
+.glyphicon-check:before{content:"\e067";}
+.glyphicon-move:before{content:"\e068";}
+.glyphicon-step-backward:before{content:"\e069";}
+.glyphicon-fast-backward:before{content:"\e070";}
+.glyphicon-backward:before{content:"\e071";}
+.glyphicon-play:before{content:"\e072";}
+.glyphicon-pause:before{content:"\e073";}
+.glyphicon-stop:before{content:"\e074";}
+.glyphicon-forward:before{content:"\e075";}
+.glyphicon-fast-forward:before{content:"\e076";}
+.glyphicon-step-forward:before{content:"\e077";}
+.glyphicon-eject:before{content:"\e078";}
+.glyphicon-chevron-left:before{content:"\e079";}
+.glyphicon-chevron-right:before{content:"\e080";}
+.glyphicon-plus-sign:before{content:"\e081";}
+.glyphicon-minus-sign:before{content:"\e082";}
+.glyphicon-remove-sign:before{content:"\e083";}
+.glyphicon-ok-sign:before{content:"\e084";}
+.glyphicon-question-sign:before{content:"\e085";}
+.glyphicon-info-sign:before{content:"\e086";}
+.glyphicon-screenshot:before{content:"\e087";}
+.glyphicon-remove-circle:before{content:"\e088";}
+.glyphicon-ok-circle:before{content:"\e089";}
+.glyphicon-ban-circle:before{content:"\e090";}
+.glyphicon-arrow-left:before{content:"\e091";}
+.glyphicon-arrow-right:before{content:"\e092";}
+.glyphicon-arrow-up:before{content:"\e093";}
+.glyphicon-arrow-down:before{content:"\e094";}
+.glyphicon-share-alt:before{content:"\e095";}
+.glyphicon-resize-full:before{content:"\e096";}
+.glyphicon-resize-small:before{content:"\e097";}
+.glyphicon-exclamation-sign:before{content:"\e101";}
+.glyphicon-gift:before{content:"\e102";}
+.glyphicon-leaf:before{content:"\e103";}
+.glyphicon-eye-open:before{content:"\e105";}
+.glyphicon-eye-close:before{content:"\e106";}
+.glyphicon-warning-sign:before{content:"\e107";}
+.glyphicon-plane:before{content:"\e108";}
+.glyphicon-random:before{content:"\e110";}
+.glyphicon-comment:before{content:"\e111";}
+.glyphicon-magnet:before{content:"\e112";}
+.glyphicon-chevron-up:before{content:"\e113";}
+.glyphicon-chevron-down:before{content:"\e114";}
+.glyphicon-retweet:before{content:"\e115";}
+.glyphicon-shopping-cart:before{content:"\e116";}
+.glyphicon-folder-close:before{content:"\e117";}
+.glyphicon-folder-open:before{content:"\e118";}
+.glyphicon-resize-vertical:before{content:"\e119";}
+.glyphicon-resize-horizontal:before{content:"\e120";}
+.glyphicon-hdd:before{content:"\e121";}
+.glyphicon-bullhorn:before{content:"\e122";}
+.glyphicon-certificate:before{content:"\e124";}
+.glyphicon-thumbs-up:before{content:"\e125";}
+.glyphicon-thumbs-down:before{content:"\e126";}
+.glyphicon-hand-right:before{content:"\e127";}
+.glyphicon-hand-left:before{content:"\e128";}
+.glyphicon-hand-up:before{content:"\e129";}
+.glyphicon-hand-down:before{content:"\e130";}
+.glyphicon-circle-arrow-right:before{content:"\e131";}
+.glyphicon-circle-arrow-left:before{content:"\e132";}
+.glyphicon-circle-arrow-up:before{content:"\e133";}
+.glyphicon-circle-arrow-down:before{content:"\e134";}
+.glyphicon-globe:before{content:"\e135";}
+.glyphicon-tasks:before{content:"\e137";}
+.glyphicon-filter:before{content:"\e138";}
+.glyphicon-fullscreen:before{content:"\e140";}
+.glyphicon-dashboard:before{content:"\e141";}
+.glyphicon-heart-empty:before{content:"\e143";}
+.glyphicon-link:before{content:"\e144";}
+.glyphicon-phone:before{content:"\e145";}
+.glyphicon-usd:before{content:"\e148";}
+.glyphicon-gbp:before{content:"\e149";}
+.glyphicon-sort:before{content:"\e150";}
+.glyphicon-sort-by-alphabet:before{content:"\e151";}
+.glyphicon-sort-by-alphabet-alt:before{content:"\e152";}
+.glyphicon-sort-by-order:before{content:"\e153";}
+.glyphicon-sort-by-order-alt:before{content:"\e154";}
+.glyphicon-sort-by-attributes:before{content:"\e155";}
+.glyphicon-sort-by-attributes-alt:before{content:"\e156";}
+.glyphicon-unchecked:before{content:"\e157";}
+.glyphicon-expand:before{content:"\e158";}
+.glyphicon-collapse-down:before{content:"\e159";}
+.glyphicon-collapse-up:before{content:"\e160";}
+.glyphicon-log-in:before{content:"\e161";}
+.glyphicon-flash:before{content:"\e162";}
+.glyphicon-log-out:before{content:"\e163";}
+.glyphicon-new-window:before{content:"\e164";}
+.glyphicon-record:before{content:"\e165";}
+.glyphicon-save:before{content:"\e166";}
+.glyphicon-open:before{content:"\e167";}
+.glyphicon-saved:before{content:"\e168";}
+.glyphicon-import:before{content:"\e169";}
+.glyphicon-export:before{content:"\e170";}
+.glyphicon-send:before{content:"\e171";}
+.glyphicon-floppy-disk:before{content:"\e172";}
+.glyphicon-floppy-saved:before{content:"\e173";}
+.glyphicon-floppy-remove:before{content:"\e174";}
+.glyphicon-floppy-save:before{content:"\e175";}
+.glyphicon-floppy-open:before{content:"\e176";}
+.glyphicon-credit-card:before{content:"\e177";}
+.glyphicon-transfer:before{content:"\e178";}
+.glyphicon-cutlery:before{content:"\e179";}
+.glyphicon-header:before{content:"\e180";}
+.glyphicon-compressed:before{content:"\e181";}
+.glyphicon-earphone:before{content:"\e182";}
+.glyphicon-phone-alt:before{content:"\e183";}
+.glyphicon-tower:before{content:"\e184";}
+.glyphicon-stats:before{content:"\e185";}
+.glyphicon-sd-video:before{content:"\e186";}
+.glyphicon-hd-video:before{content:"\e187";}
+.glyphicon-subtitles:before{content:"\e188";}
+.glyphicon-sound-stereo:before{content:"\e189";}
+.glyphicon-sound-dolby:before{content:"\e190";}
+.glyphicon-sound-5-1:before{content:"\e191";}
+.glyphicon-sound-6-1:before{content:"\e192";}
+.glyphicon-sound-7-1:before{content:"\e193";}
+.glyphicon-copyright-mark:before{content:"\e194";}
+.glyphicon-registration-mark:before{content:"\e195";}
+.glyphicon-cloud-download:before{content:"\e197";}
+.glyphicon-cloud-upload:before{content:"\e198";}
+.glyphicon-tree-conifer:before{content:"\e199";}
+.glyphicon-tree-deciduous:before{content:"\e200";}
+.glyphicon-briefcase:before{content:"\1f4bc";}
+.glyphicon-calendar:before{content:"\1f4c5";}
+.glyphicon-pushpin:before{content:"\1f4cc";}
+.glyphicon-paperclip:before{content:"\1f4ce";}
+.glyphicon-camera:before{content:"\1f4f7";}
+.glyphicon-lock:before{content:"\1f512";}
+.glyphicon-bell:before{content:"\1f514";}
+.glyphicon-bookmark:before{content:"\1f516";}
+.glyphicon-fire:before{content:"\1f525";}
+.glyphicon-wrench:before{content:"\1f527";}
+</style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    
+            
+        
+    
+            
+        
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 230px;
+    background-color: white;
+    border: 2px solid grey;
+    z-index: 9999;
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 6px;
+">
+
+    <b>Cyclone Path Legend</b>
+    <br><br>
+
+    <span style="color:blue;">━━━━</span>
+    Historical Path
+    <br>
+
+    <span style="color:red;">━━━━</span>
+    Predicted Path
+    <br>
+
+    <span style="color:green;">●</span>
+    Last Observed Position
+    <br>
+
+    <span style="color:orange;">●</span>
+    Sri Lanka
+
+</div>
+    
+            <div class="folium-map" id="map_e5b47861f0fe4b360c26b690675d70df" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_e5b47861f0fe4b360c26b690675d70df = L.map(
+                "map_e5b47861f0fe4b360c26b690675d70df",
+                {
+                    center: [15.8, 80.2],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_c89b10826e77c0dc81f712965441efaa = L.tileLayer(
+                "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+                {
+  "minZoom": 0,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "Tiles \u00a9 Esri",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_c89b10826e77c0dc81f712965441efaa.addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+            var poly_line_f2001953b1b31bb8da6d3a7c7237ad83 = L.polyline(
+                [[15.1, 80.5], [15.3, 80.4], [15.5, 80.3], [15.7, 80.2], [15.8, 80.2]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+            poly_line_f2001953b1b31bb8da6d3a7c7237ad83.bindTooltip(
+                `<div>
+                     Historical Cyclone Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a3c16467bde0044e03efbe96b98409d9 = L.polyline(
+                [[15.8, 80.2], [15.935563760995866, 80.15707917958497], [16.06567302644253, 80.11684785485267], [16.209763723611832, 80.06768542602657], [16.35965182185173, 80.01410230323671], [16.51222561597824, 79.95848035886883], [16.667892622947694, 79.90027516037225], [16.826064723730088, 79.84098708331584], [16.98689002096653, 79.78063414692878]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+            poly_line_a3c16467bde0044e03efbe96b98409d9.bindTooltip(
+                `<div>
+                     Predicted Cyclone Path
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b6c9bcfcd1bea97e775d2d8226011c38 = L.marker(
+                [15.8, 80.2],
+                {
+}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+            var icon_c4fa8869828474d027f307276712acf6 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a300e9b14db28481ab37a344afc2d31f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_64e2797f7bd829777e5582a10b8fe9f2 = $(`<div id="html_64e2797f7bd829777e5582a10b8fe9f2" style="width: 100.0%; height: 100.0%;"><b>Last Observed Cyclone Position</b></div>`)[0];
+                popup_a300e9b14db28481ab37a344afc2d31f.setContent(html_64e2797f7bd829777e5582a10b8fe9f2);
+            
+        
+
+        marker_b6c9bcfcd1bea97e775d2d8226011c38.bindPopup(popup_a300e9b14db28481ab37a344afc2d31f)
+        ;
+
+        
+    
+    
+            marker_b6c9bcfcd1bea97e775d2d8226011c38.bindTooltip(
+                `<div>
+                     Last Observed Position
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                {
+                    const element = marker_b6c9bcfcd1bea97e775d2d8226011c38.getElement();
+                    if (element) {
+                        element.style.width = "";
+                        element.style.height = "";
+                        element.style.marginLeft = "";
+                        element.style.marginTop = "";
+                    }
+                }
+                marker_b6c9bcfcd1bea97e775d2d8226011c38.setIcon(icon_c4fa8869828474d027f307276712acf6);
+            
+    
+            var circle_marker_0f41a7078544f2432f8157ef0265ab3f = L.circleMarker(
+                [15.935563760995866, 80.15707917958497],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_df641c06c3b4165dbaa8c1ddb2735f4f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_bcc237fdbc141885a0ee24aafbb15293 = $(`<div id="html_bcc237fdbc141885a0ee24aafbb15293" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 1 hours<br>Latitude: 15.9356<br>Longitude: 80.1571<br>Movement Speed: 5.25 km/h</div>`)[0];
+                popup_df641c06c3b4165dbaa8c1ddb2735f4f.setContent(html_bcc237fdbc141885a0ee24aafbb15293);
+            
+        
+
+        circle_marker_0f41a7078544f2432f8157ef0265ab3f.bindPopup(popup_df641c06c3b4165dbaa8c1ddb2735f4f)
+        ;
+
+        
+    
+    
+            circle_marker_0f41a7078544f2432f8157ef0265ab3f.bindTooltip(
+                `<div>
+                     Predicted position: 1 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ba3218a6feffb37b18907a43ea4811d4 = L.circleMarker(
+                [16.06567302644253, 80.11684785485267],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_470da6b6e91986ad87dc12c52535b24b = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_114bd44ba40bad1cb0f571918c206d47 = $(`<div id="html_114bd44ba40bad1cb0f571918c206d47" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 2 hours<br>Latitude: 16.0657<br>Longitude: 80.1168<br>Movement Speed: 5.03 km/h</div>`)[0];
+                popup_470da6b6e91986ad87dc12c52535b24b.setContent(html_114bd44ba40bad1cb0f571918c206d47);
+            
+        
+
+        circle_marker_ba3218a6feffb37b18907a43ea4811d4.bindPopup(popup_470da6b6e91986ad87dc12c52535b24b)
+        ;
+
+        
+    
+    
+            circle_marker_ba3218a6feffb37b18907a43ea4811d4.bindTooltip(
+                `<div>
+                     Predicted position: 2 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_b6c6d7ab8d69bd094f4e7e4b4d5eca85 = L.circleMarker(
+                [16.209763723611832, 80.06768542602657],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_761130a5af3af003532c472008103f18 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ebde7b934f4f12c4d14b655868c68229 = $(`<div id="html_ebde7b934f4f12c4d14b655868c68229" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 3 hours<br>Latitude: 16.2098<br>Longitude: 80.0677<br>Movement Speed: 5.62 km/h</div>`)[0];
+                popup_761130a5af3af003532c472008103f18.setContent(html_ebde7b934f4f12c4d14b655868c68229);
+            
+        
+
+        circle_marker_b6c6d7ab8d69bd094f4e7e4b4d5eca85.bindPopup(popup_761130a5af3af003532c472008103f18)
+        ;
+
+        
+    
+    
+            circle_marker_b6c6d7ab8d69bd094f4e7e4b4d5eca85.bindTooltip(
+                `<div>
+                     Predicted position: 3 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_d3eba821e2e2671c0a904ac3529cfd4d = L.circleMarker(
+                [16.35965182185173, 80.01410230323671],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_a55e81f6041b7cffcf77e3ae18eaea04 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ab01cd10180a076fdf7d98c523b16f25 = $(`<div id="html_ab01cd10180a076fdf7d98c523b16f25" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 4 hours<br>Latitude: 16.3597<br>Longitude: 80.0141<br>Movement Speed: 5.87 km/h</div>`)[0];
+                popup_a55e81f6041b7cffcf77e3ae18eaea04.setContent(html_ab01cd10180a076fdf7d98c523b16f25);
+            
+        
+
+        circle_marker_d3eba821e2e2671c0a904ac3529cfd4d.bindPopup(popup_a55e81f6041b7cffcf77e3ae18eaea04)
+        ;
+
+        
+    
+    
+            circle_marker_d3eba821e2e2671c0a904ac3529cfd4d.bindTooltip(
+                `<div>
+                     Predicted position: 4 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_be0943d4072593e35aaf84cdf9399b7b = L.circleMarker(
+                [16.51222561597824, 79.95848035886883],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_33819b14020dbfee788f5cf88353042f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f7709d3a0b3ced33abcc8035cda3017a = $(`<div id="html_f7709d3a0b3ced33abcc8035cda3017a" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 5 hours<br>Latitude: 16.5122<br>Longitude: 79.9585<br>Movement Speed: 5.99 km/h</div>`)[0];
+                popup_33819b14020dbfee788f5cf88353042f.setContent(html_f7709d3a0b3ced33abcc8035cda3017a);
+            
+        
+
+        circle_marker_be0943d4072593e35aaf84cdf9399b7b.bindPopup(popup_33819b14020dbfee788f5cf88353042f)
+        ;
+
+        
+    
+    
+            circle_marker_be0943d4072593e35aaf84cdf9399b7b.bindTooltip(
+                `<div>
+                     Predicted position: 5 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_59c5199e86bc49b165c8b0c1b8cb2057 = L.circleMarker(
+                [16.667892622947694, 79.90027516037225],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_ec47e3a02017a5e00e076714a22babd3 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_fe085b4abb1ae4a523d6fe21ea9e4fa9 = $(`<div id="html_fe085b4abb1ae4a523d6fe21ea9e4fa9" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 6 hours<br>Latitude: 16.6679<br>Longitude: 79.9003<br>Movement Speed: 6.13 km/h</div>`)[0];
+                popup_ec47e3a02017a5e00e076714a22babd3.setContent(html_fe085b4abb1ae4a523d6fe21ea9e4fa9);
+            
+        
+
+        circle_marker_59c5199e86bc49b165c8b0c1b8cb2057.bindPopup(popup_ec47e3a02017a5e00e076714a22babd3)
+        ;
+
+        
+    
+    
+            circle_marker_59c5199e86bc49b165c8b0c1b8cb2057.bindTooltip(
+                `<div>
+                     Predicted position: 6 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_c792b05a0978925361bf1a79f24decaf = L.circleMarker(
+                [16.826064723730088, 79.84098708331584],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_ba4c76d21b9493bf87bc0025b699c7b3 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2fd980bd786dcd331ca7a813b5fe85ed = $(`<div id="html_2fd980bd786dcd331ca7a813b5fe85ed" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 7 hours<br>Latitude: 16.8261<br>Longitude: 79.8410<br>Movement Speed: 6.23 km/h</div>`)[0];
+                popup_ba4c76d21b9493bf87bc0025b699c7b3.setContent(html_2fd980bd786dcd331ca7a813b5fe85ed);
+            
+        
+
+        circle_marker_c792b05a0978925361bf1a79f24decaf.bindPopup(popup_ba4c76d21b9493bf87bc0025b699c7b3)
+        ;
+
+        
+    
+    
+            circle_marker_c792b05a0978925361bf1a79f24decaf.bindTooltip(
+                `<div>
+                     Predicted position: 7 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_db328a7db2b549a02fe444a63e752220 = L.circleMarker(
+                [16.98689002096653, 79.78063414692878],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+        var popup_9972684dd6f6e27f1695baf760296b0f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_b17cf8405d00fb3aa2ea867c56f41538 = $(`<div id="html_b17cf8405d00fb3aa2ea867c56f41538" style="width: 100.0%; height: 100.0%;"><b>Predicted Cyclone Position</b><br>Forecast: 8 hours<br>Latitude: 16.9869<br>Longitude: 79.7806<br>Movement Speed: 6.33 km/h</div>`)[0];
+                popup_9972684dd6f6e27f1695baf760296b0f.setContent(html_b17cf8405d00fb3aa2ea867c56f41538);
+            
+        
+
+        circle_marker_db328a7db2b549a02fe444a63e752220.bindPopup(popup_9972684dd6f6e27f1695baf760296b0f)
+        ;
+
+        
+    
+    
+            circle_marker_db328a7db2b549a02fe444a63e752220.bindTooltip(
+                `<div>
+                     Predicted position: 8 hours
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_e8020df87b4d643982bf15a638ea2cef = L.marker(
+                [7.8731, 80.7718],
+                {
+}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+        
+    
+            var icon_7d19e6330aa139c3835abd62d84c0ccf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "flag",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8572b2fa26c00be2f53690467e4ff791 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_55a16450225189862e3c2ed4c279c376 = $(`<div id="html_55a16450225189862e3c2ed4c279c376" style="width: 100.0%; height: 100.0%;">Sri Lanka</div>`)[0];
+                popup_8572b2fa26c00be2f53690467e4ff791.setContent(html_55a16450225189862e3c2ed4c279c376);
+            
+        
+
+        marker_e8020df87b4d643982bf15a638ea2cef.bindPopup(popup_8572b2fa26c00be2f53690467e4ff791)
+        ;
+
+        
+    
+    
+            marker_e8020df87b4d643982bf15a638ea2cef.bindTooltip(
+                `<div>
+                     Sri Lanka
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                {
+                    const element = marker_e8020df87b4d643982bf15a638ea2cef.getElement();
+                    if (element) {
+                        element.style.width = "";
+                        element.style.height = "";
+                        element.style.marginLeft = "";
+                        element.style.marginTop = "";
+                    }
+                }
+                marker_e8020df87b4d643982bf15a638ea2cef.setIcon(icon_7d19e6330aa139c3835abd62d84c0ccf);
+            
+    
+            var layer_control_851fbb822d23d0fa7f03f82819128b00_layers = {
+                base_layers : {
+                    "Esri World Street Map" : tile_layer_c89b10826e77c0dc81f712965441efaa,
+                },
+                overlays :  {
+                },
+            };
+            let layer_control_851fbb822d23d0fa7f03f82819128b00 = L.control.layers(
+                layer_control_851fbb822d23d0fa7f03f82819128b00_layers.base_layers,
+                layer_control_851fbb822d23d0fa7f03f82819128b00_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_e5b47861f0fe4b360c26b690675d70df);
+
+        
+    
+            map_e5b47861f0fe4b360c26b690675d70df.fitBounds(
+                [[15.1, 80.5], [15.3, 80.4], [15.5, 80.3], [15.7, 80.2], [15.8, 80.2], [15.935563760995866, 80.15707917958497], [16.06567302644253, 80.11684785485267], [16.209763723611832, 80.06768542602657], [16.35965182185173, 80.01410230323671], [16.51222561597824, 79.95848035886883], [16.667892622947694, 79.90027516037225], [16.826064723730088, 79.84098708331584], [16.98689002096653, 79.78063414692878]],
+                {}
+            );
+        
+</script>
+</html>
